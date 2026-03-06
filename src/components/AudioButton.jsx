@@ -1,30 +1,39 @@
-import React from 'react';
-// 1. Importando o ícone bonitão
-import { Volume2 } from 'lucide-react';
+function AudioButton({ audioUrl }) {
+  // Se a API não devolver nenhum áudio para a palavra, não mostramos o botão
+  if (!audioUrl) return null;
 
-const AudioButton = ({ audioUrl }) => {
-  const playAudio = () => {
-    if (audioUrl) {
-      const audio = new Audio(audioUrl);
-      audio.play();
-    } else {
-      alert("Áudio não disponível para esta palavra."); 
-    }
+  const tocarAudio = () => {
+    const audio = new Audio(audioUrl);
+    audio.play();
   };
 
   return (
     <button 
-      className="audio-button" 
-      onClick={playAudio} 
+      onClick={tocarAudio} 
+      className="audio-button"
       title="Ouvir pronúncia"
-      disabled={!audioUrl} 
-      style={{ opacity: audioUrl ? 1 : 0.5, cursor: audioUrl ? 'pointer' : 'not-allowed' }}
+      style={{
+        background: 'var(--primary-gradient)',
+        border: 'none',
+        borderRadius: '50%',
+        width: '60px',
+        height: '60px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: 'pointer',
+        boxShadow: '0 10px 15px -3px rgba(168, 85, 247, 0.4)',
+        transition: 'transform 0.2s'
+      }}
+      onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+      onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
     >
-      {/* 2. Trocamos o emoji 🔊 pelo componente do ícone! */}
-      {/* Coloquei um tamanho de 24px que fica perfeito dentro do botão de 60px */}
-      <Volume2 size={24} />
+      {/* Ícone de Play (SVG puro, sem precisar de bibliotecas) */}
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28px" height="28px">
+        <path d="M8 5v14l11-7z" />
+      </svg>
     </button>
   );
-};
+}
 
 export default AudioButton;

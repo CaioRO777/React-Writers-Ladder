@@ -1,104 +1,189 @@
-/* Container principal - centraliza tudo e dá um limite de largura */
-.dictionary-app {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: left; /* Alinhamento do texto para a esquerda, estilo Google */
+/* Importando as fontes direto do Google Fonts para garantir o visual perfeito */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;1,500&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+:root {
+  /* Paleta Vibrante e Magnética */
+  --primary-color: #6366f1; /* Indigo elétrico */
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); /* Roxo para Rosa */
+  --bg-color: #f0fdfa; /* Um fundo quase branco, levemente menta/tecnológico */
+  --card-bg: #ffffff;
+  --text-main: #0f172a; /* Quase preto, mais suave para os olhos */
+  --text-muted: #64748b;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(99, 102, 241, 0.15); /* Sombra colorida! */
 }
 
-/* Barra de pesquisa */
-.search-input {
+body {
+  background-color: var(--bg-color);
+  font-family: 'Plus Jakarta Sans', sans-serif; /* Fonte moderna e limpa */
+  color: var(--text-main);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 4rem;
+  
+  /* Padrão sutil de fundo para dar textura sem poluir */
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.container {
   width: 100%;
-  padding: 1rem 1.5rem;
-  font-size: 1.2rem;
-  border-radius: 50px; /* Deixa arredondado */
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  max-width: 700px;
+  background: var(--card-bg);
+  padding: 3rem;
+  border-radius: 24px; /* Bordas bem arredondadas, amigáveis */
+  box-shadow: var(--shadow-lg);
+  
+  /* A Animação do "Efeito Uau" logo ao abrir a página */
+  animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- TÍTULO DO APP --- */
+h1 {
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 0;
   margin-bottom: 2rem;
-  transition: box-shadow 0.3s ease;
 }
 
-.search-input:focus {
+/* --- SEARCH BAR (A barra magnética) --- */
+.search-bar {
+  display: flex;
+  background-color: #f8fafc;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 8px 12px 8px 24px;
+  margin-bottom: 2.5rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Efeito de foco neon na barra de pesquisa */
+.search-bar:focus-within {
+  border-color: var(--primary-color);
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: 600;
   outline: none;
-  border-color: #646cff;
-  box-shadow: 0 0 10px rgba(100, 108, 255, 0.2); /* Brilho azul ao clicar */
+  color: var(--text-main);
 }
 
-/* Cabeçalho da Palavra (Onde fica a palavra e o botão de áudio) */
+.search-bar button {
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search-bar button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.4);
+}
+
+/* --- O RESULTADO DA PALAVRA (Estilo Google, mas imponente) --- */
 .word-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px dashed #e2e8f0;
 }
 
-/* A Palavra Principal - Usamos fonte Serifada (estilo jornal/livro) */
 .word-title {
-  font-size: 4rem;
+  font-family: 'Lora', serif; /* Fonte clássica de dicionário */
+  font-size: 4.5rem; /* Gigante e chamativa */
+  font-weight: 600;
   margin: 0;
-  font-family: "Georgia", "Times New Roman", serif;
-  font-weight: bold;
+  color: var(--text-main);
+  line-height: 1.1;
 }
 
-/* A pronúncia (aquela escrita esquisita, ex: /riˈækt/) */
 .word-phonetic {
+  color: var(--primary-color);
   font-size: 1.5rem;
-  color: #646cff; /* Azulzinho */
-  margin-top: 0.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin: 8px 0 0 0;
+  font-weight: 600;
 }
 
-/* Botão de Tocar Áudio */
-.audio-button {
-  background-color: #e0e7ff; /* Fundo azul claro */
-  color: #646cff; /* Ícone azul escuro */
-  border-radius: 50%; /* Deixa redondinho */
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-}
-
-.audio-button:hover {
-  background-color: #c7d2fe;
-}
-
-/* Subtítulo: Substantivo, Verbo, etc. */
-.part-of-speech {
-  font-size: 1.2rem;
-  font-style: italic;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
+/* --- SINÔNIMOS (Pílulas vibrantes) --- */
+.synonyms-label {
+  font-weight: 600;
+  color: var(--text-muted);
   margin-bottom: 1rem;
-}
-
-/* Aquela linha horizontal bonitinha do lado do verbo/substantivo */
-.part-of-speech::after {
-  content: "";
-  height: 1px;
-  background-color: #e5e5e5;
-  flex-grow: 1; /* Faz a linha ocupar o resto do espaço */
-}
-
-/* Lista de significados */
-.meanings-list {
-  padding-left: 2rem; /* Afasta a lista da borda */
-}
-
-.meanings-list li {
-  margin-bottom: 1rem;
+  display: block;
   font-size: 1.1rem;
-  
 }
 
-/* Exemplos de uso nas frases */
-.example-text {
-  color: #a3a3a3; /* Cinza claro para não roubar a atenção */
-  font-style: italic;
-  display: block; /* Pula para a linha de baixo */
-  margin-top: 0.3rem;
+.synonym-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sinonimo-item {
+  background: #f1f5f9;
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  /* Sua animação mantida! */
+  animation-name: aparecerSuave;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); /* Efeito "mola" */
+  animation-fill-mode: backwards;
+}
+
+.sinonimo-item:hover {
+  background: var(--primary-gradient);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* --- ANIMAÇÕES --- */
+@keyframes slideUpFade {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes aparecerSuave {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.error-message {
+  text-align: center;
+  color: #ef4444;
+  background: #fef2f2;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: bold;
 }
